@@ -1,9 +1,12 @@
 import React from 'react'
+import { useAuth } from '../context/authContex'
 
 const AdminDashbaord = () => {
+  const { user } = useAuth()
+
   return (
     <div>
-      AdminDashboard
+      AdminDashboard {user && user.name}
     </div>
   )
 }

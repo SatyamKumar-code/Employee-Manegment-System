@@ -15,7 +15,7 @@ const login = async (req, res) => {
             return res.status(400).json({ success: false, error: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role },process.env.JWT_SECRET, process.env.JWT_EXPIRES_IN);
+        const token = jwt.sign({ id: user._id, role: user.role },process.env.JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({
             success: true,
             token,
@@ -30,7 +30,11 @@ const login = async (req, res) => {
         console.error("authController file in login :",error.message);
         res.status(500).json({ success: false, error: error.message });
     }
+};
+
+const verify = (req, res) => {
+    return res.status(200).json({ success: true, user: req.user });
 }
 
 
-export { login };
+export { login, verify};
