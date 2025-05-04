@@ -1,12 +1,20 @@
 import React from 'react'
 import { useAuth } from '../context/authContex'
+import AdminSidebar from '../components/dasboard/AdminSidebar'
+import Navbar from '../components/dasboard/Navbar'
+import AdminSummary from '../components/dasboard/AdminSummary'
+import { Outlet } from 'react-router-dom'
 
 const AdminDashbaord = () => {
   const { user } = useAuth()
 
   return (
-    <div>
-      AdminDashboard {user && user.name}
+    <div className='flex'>
+      <AdminSidebar />
+      <div className='flex-1 md:-z-1 md:pl-64 z-0  bg-gray-100 h-screen '>
+        <Navbar />
+        <Outlet />
+      </div>
     </div>
   )
 }
