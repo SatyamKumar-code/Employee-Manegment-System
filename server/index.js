@@ -1,6 +1,7 @@
 import express from 'express';
 import cores from 'cors';
 import authRouter from './routes/auth.js';
+import departmentRouter from './routes/department.js';
 import connectDB from './config/db.js';
 
 const app = express();
@@ -10,6 +11,7 @@ connectDB();
 app.use(cores());
 app.use(express.json());
 app.use('/api/auth', authRouter);
+app.use('/api/department', departmentRouter)
 
 
 app.listen(PORT, () => {
