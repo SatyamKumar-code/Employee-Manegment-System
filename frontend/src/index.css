@@ -10,11 +10,11 @@
 
 @keyframes skeleton-loading {
     0% {
-        background-color: hsl(200, 20%, 80%);
+        background-color: hsl(200, 2%, 68%);
     }
 
     100% {
-        background-color: hsl(200, 20%, 95%);
+        background-color: hsl(300, 11%, 98%);
     }
 }
 
@@ -24,11 +24,29 @@
     margin-bottom: 0.5rem;
     border-radius: 0.25rem;
 }
-
+.selection-header {
+    width: 80%;
+}
 .skeleton-text__body {
-    width: 75%;
+    width: 60%;
 }
 
 .skeleton-footer {
-    width: 30%;
+    width: 40%;
+}
+
+.loding {
+    width: screen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.card {
+    width: 100vh;
+    height: 50vh;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0px 0px 10px hsl(300, 1%, 68%);
+    
 }
