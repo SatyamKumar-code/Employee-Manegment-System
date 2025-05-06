@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fetchDepartments } from '../../utils/EmployeeHelper'
+import axios from 'axios'
 
 const Add = () => {
 
@@ -14,10 +15,45 @@ const Add = () => {
         getDepartments()
     }, [])
 
+
+    const handleChange = (e) => {
+        const { name, value, files } = e.targer
+        if (name === "image") {
+            setFormData((prevData) => ({ ...prevData, [name]: files[0] }))
+        } else {
+            setFormData((prevData) => ({ ...prevData, [name]: value }))
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.prevenDefault()
+
+        const formDataObj = new FormData()
+        Object.keys(formData).forEach((key) => {
+            formDataObj.append(key, formData[key])
+        })
+
+        try {
+            const response = await axios.post('http://localhost:3001/api/employee/add', formDataObj, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+
+            })
+            if (response.data.success) {
+                navigate('/admin-dashboard/employees')
+            }
+        } catch (error) {
+            if (error.response && !error.response.data.success) {
+                alert(error.response.data.error)
+            }
+        }
+    }
+
     return (
         <div className='max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md'>
             <h2 className='text-2xl font-bold mb-6'>Add New Employee</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     {/* Name */}
                     <div>
@@ -27,6 +63,7 @@ const Add = () => {
                         <input
                             type="text"
                             name='name'
+                            onChange={handleChange}
                             placeholder='Insert Name'
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
@@ -40,6 +77,7 @@ const Add = () => {
                         <input
                             type="email"
                             name='email'
+                            onChange={handleChange}
                             placeholder='Insert Email'
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
@@ -54,6 +92,7 @@ const Add = () => {
                         <input
                             type="text"
                             name='employeeId'
+                            onChange={handleChange}
                             placeholder='Insert Employee ID'
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
@@ -68,6 +107,7 @@ const Add = () => {
                         <input
                             type="date"
                             name='dob'
+                            onChange={handleChange}
                             placeholder='DOB'
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
@@ -81,6 +121,7 @@ const Add = () => {
                         </label>
                         <select
                             name="gender"
+                            onChange={handleChange}
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
                         >
@@ -98,6 +139,7 @@ const Add = () => {
                         </label>
                         <select
                             name="martialStatus"
+                            onChange={handleChange}
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
                         >
@@ -116,6 +158,7 @@ const Add = () => {
                         <input
                             type="text"
                             name='designation'
+                            onChange={handleChange}
                             placeholder='Designation'
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
@@ -129,6 +172,7 @@ const Add = () => {
                         </label>
                         <select
                             name="department"
+                            onClick={handleChange}
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
                         >
@@ -147,6 +191,7 @@ const Add = () => {
                         <input
                             type="number"
                             name='salary'
+                            onChange={handleChange}
                             placeholder='Salary'
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
@@ -161,6 +206,7 @@ const Add = () => {
                         <input
                             type="password"
                             name='password'
+                            onChange={handleChange}
                             placeholder='******'
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
@@ -174,6 +220,7 @@ const Add = () => {
                         </label>
                         <select
                             name="role"
+                            onChange={handleChange}
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
                         >
@@ -191,6 +238,7 @@ const Add = () => {
                         <input
                             type="file"
                             name='image'
+                            onChange={handleChange}
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required
                         />
