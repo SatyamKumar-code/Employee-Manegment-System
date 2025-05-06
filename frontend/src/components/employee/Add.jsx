@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { fetchDepartments } from '../../utils/EmployeeHelper'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Add = () => {
 
     const [departments, setDepartments] = useState([])
     const [formData, setFormData] = useState({})
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getDepartments = async () => {
@@ -17,7 +19,7 @@ const Add = () => {
 
 
     const handleChange = (e) => {
-        const { name, value, files } = e.targer
+        const { name, value, files } = e.target
         if (name === "image") {
             setFormData((prevData) => ({ ...prevData, [name]: files[0] }))
         } else {
@@ -26,7 +28,7 @@ const Add = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.prevenDefault()
+        e.preventDefault()
 
         const formDataObj = new FormData()
         Object.keys(formData).forEach((key) => {
@@ -138,7 +140,7 @@ const Add = () => {
                             Martial Status
                         </label>
                         <select
-                            name="martialStatus"
+                            name="maritalStatus"
                             onChange={handleChange}
                             className='mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500'
                             required

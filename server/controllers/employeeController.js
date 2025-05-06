@@ -2,13 +2,15 @@ import multer from 'multer'
 import Employee from '../models/Employee.js'
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
+import path from 'path'
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "public/uploads")
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extaname(file.originalname))
+        cb(null, Date.now() + path.extname(file.originalname))
     }
 })
 
@@ -59,10 +61,8 @@ const addEmployee = async (req, res) => {
 
         await newEmployee.save()
         return res.status(201).json({ success: true, message: "Employee Created Successfully"})
-    } catch (error) {
-        console.log(error.message);
-        
-        console.error("Error creating employee in employeeController file:", error.message);
+
+    } catch (error) {console.error("Error creating employee in employeeController file:", error.message);
         return res.status(500).json({ success: false, error: "Server error in adding employee" });
     }
 }

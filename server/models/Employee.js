@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const employeeSchema = new Schema({
-    UserId: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
@@ -20,12 +20,14 @@ const employeeSchema = new Schema({
         type: String
     },
     maritalStatus: {
-        type: String
+        type: String,
+        required: true,
+        default: "single",
     },
     designation: {
         type: String
     },
-    Department: {
+    department: {
         type: Schema.Types.ObjectId,
         ref: "Department",
         required: true
