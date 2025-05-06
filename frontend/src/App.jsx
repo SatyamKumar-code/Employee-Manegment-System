@@ -8,13 +8,15 @@ import AdminSummary from './components/dasboard/AdminSummary'
 import DepartmentList from './components/Department/DepartmentList'
 import AddDepartment from './components/Department/AddDepartment'
 import EditDepartment from './components/Department/EditDepartment'
+import List from './components/employee/List'
+import Add from './components/employee/Add'
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Navigate to="/admin-dashbord" />}></Route>
+        <Route path='/' element={<Navigate to="/admin-dashboard" />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/admin-dashboard' element={
           <PrivateRoutes>
@@ -28,6 +30,9 @@ function App() {
           <Route path="/admin-dashboard/departments" element={<DepartmentList />} />
           <Route path="/admin-dashboard/add-department" element={<AddDepartment />} />
           <Route path='/admin-dashboard/department/:id' element={<EditDepartment />} />
+
+          <Route path="/admin-dashboard/employees" element={<List />} />
+          <Route path="/admin-dashboard/add-employee" element={<Add />} />
 
         </Route>
         <Route path='/employee-dashboard' element={<EmployeeDashboard />}></Route>

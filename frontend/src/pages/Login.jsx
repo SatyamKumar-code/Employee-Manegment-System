@@ -64,7 +64,7 @@ const Login = () => {
                             />
                             <button
                                 type="button"
-                                className='absolute right-2 top-2 text-gray-600'
+                                className='absolute right-2 top-2 text-gray-600 cursor-pointer'
                                 onClick={() => setShowPassword(!showPassword)}
                             >
                                 {showPassword ? "Hide" : "Show"}
@@ -81,7 +81,7 @@ const Login = () => {
                         </a>
                     </div>
                     <div className='mb-4'>
-                        <button className='w-full bg-teal-600 text-white py-2' type='submit'>
+                        <button className='w-full bg-teal-600 text-white py-2 cursor-pointer' type='submit'>
                             Login
                         </button>
                     </div>
