@@ -1,4 +1,6 @@
 import React from 'react'
+import { useAuth } from '../context/authContex'
+
 
 const EmployeeDashboard = () => {
     const { user } = useAuth()

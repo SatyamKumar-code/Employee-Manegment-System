@@ -67,4 +67,25 @@ const addEmployee = async (req, res) => {
     }
 }
 
-export { addEmployee, upload }
+const getEmployees = async (req, res) => {
+    try {
+        const employees = await Employee.find().populate("userId", {password: 0}).populate("department")
+        return res.status(200).json({ success: true, employees })
+    } catch (error) {
+        console.error("Error fetching employees in employeeController file:", error.message);
+        return res.status(500).json({ success: false, error: "Server error in fetching employees" });
+    }
+}
+
+const getEmployee = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const employee = await Employee.findById({_id: id}).populate("userId", {password: 0}).populate("department")
+        return res.status(200).json({ success: true, employee })
+    } catch (error) {
+        console.error("Error fetching employees in employeeController file:", error.message);
+        return res.status(500).json({ success: false, error: "Server error in fetching employees" });
+    }
+}
+
+export { addEmployee, getEmployees, getEmployee, upload }

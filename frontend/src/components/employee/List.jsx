@@ -1,7 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { EmployeeButtons, columns } from '../../utils/EmployeeHelper'
+import DataTable from 'react-data-table-component'
+import axios from 'axios'
+
 
 const List = () => {
+
+  const [employees, setEmployees] = useState([])
+  const [empLoading, setEmpLoading] = useState(false)
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      setEmpLoading(true)
+      try {
+        const response = await axios.get('http://localhost:3001/api/employee', {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        if (response.data.success) {
+          let sno = 1
+          const data = response.data.employees.map((emp) => (
+            {
+              _id: emp._id,
+              sno: sno++,
+              dep_name: emp.department.dep_name,
+              name: emp.userId.name,
+              dob: new Date(emp.dob).toLocaleDateString(),
+              profileImage: <img className='h-10.5 w-10.5 rounded-full ' src={`http://localhost:3001/${emp.userId.profileImage}`} alt="profile" />,
+              action: (<EmployeeButtons _id={emp._id} />),
+            }
+          ));
+          setEmployees(data) 
+        }
+      } catch (error) {
+        console.error("Error fetching departments in DepartmentList file:", error)
+        if (error.response && !error.response.data.success) {
+          alert(error.response.data.error)
+        }
+      }
+
+      finally {
+        setEmpLoading(false)
+      }
+
+
+    };
+    fetchEmployees();
+  }, []);
+
   return (
     <div className='p-6'>
       <div className='text-center'>
@@ -19,6 +67,9 @@ const List = () => {
         >
           Add New Employee
         </Link>
+      </div>
+      <div>
+        <DataTable columns={columns} data={employees} />
       </div>
     </div>
   )
