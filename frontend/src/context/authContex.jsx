@@ -19,9 +19,14 @@ const AuthContex = ({children}) => {
                         }
                     })
                     
-                    if(response.data.success) {
+                    if(response.data.user.role === "admin") {
                         setUser(response.data.user)
                     }
+                
+                    // if(response.data.success) {
+                    //     setUser(response.data.user)
+                    // }
+
                 } else {
                     setUser(null)
                     setLoading(false)

@@ -9,6 +9,7 @@ const List = () => {
 
   const [employees, setEmployees] = useState([])
   const [empLoading, setEmpLoading] = useState(false)
+  const [filteredEmployee, setFilteredEmployee] = useState([])
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -33,6 +34,7 @@ const List = () => {
             }
           ));
           setEmployees(data) 
+          setFilteredEmployee(data)
         }
       } catch (error) {
         console.error("Error fetching departments in DepartmentList file:", error)
@@ -50,6 +52,13 @@ const List = () => {
     fetchEmployees();
   }, []);
 
+  const hendleFilter = (e) => {
+    const records = employees.filter((emp) => (
+      emp.name.toLowerCase().includes(e.target.value.toLowerCase())
+    ))
+    setFilteredEmployee(records)
+  }
+
   return (
     <div className='p-6'>
       <div className='text-center'>
@@ -59,7 +68,8 @@ const List = () => {
         <input
           type="text"
           className='px-4 py-0.5 bg-white border border-gray-300 '
-          placeholder='Search By Dep Name'
+          placeholder='Search By Name'
+          onChange={hendleFilter}
         />
         <Link
           className='px-4 py-1 bg-teal-600 text-white rounded'
@@ -68,8 +78,8 @@ const List = () => {
           Add New Employee
         </Link>
       </div>
-      <div>
-        <DataTable columns={columns} data={employees} />
+      <div className='mt-6'>
+        <DataTable columns={columns} data={filteredEmployee} pagination />
       </div>
     </div>
   )
