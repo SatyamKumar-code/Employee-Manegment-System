@@ -41,7 +41,7 @@ const Edit = () => {
                         maritalStatus: employee.maritalStatus,
                         designation: employee.designation,
                         salary: employee.salary,
-                        department: employee.department,
+                        department: employee.department._id || employee.department,
                     }));
                 }
             } catch (error) {
