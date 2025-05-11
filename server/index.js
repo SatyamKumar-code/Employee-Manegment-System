@@ -3,6 +3,7 @@ import cores from 'cors';
 import authRouter from './routes/auth.js';
 import departmentRouter from './routes/department.js';
 import employeeRouter from './routes/employee.js';
+import salaryRouter from './routes/salary.js';
 import connectDB from './config/db.js';
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRouter);
 app.use('/api/department', departmentRouter)
 app.use('/api/employee', employeeRouter);
+app.use('/api/salary', salaryRouter);
 
 
 app.listen(PORT, () => {

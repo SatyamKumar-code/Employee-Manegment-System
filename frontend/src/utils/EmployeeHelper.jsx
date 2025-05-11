@@ -34,6 +34,7 @@ export const columns = [
     name: "Actions",
     selector: (row) => row.action,
     center: true,
+    style: { textAlign: "center" }
   }
 ]
 
@@ -58,6 +59,29 @@ export const fetchDepartments = async () => {
 
 };
 
+// employees for salary from
+
+export const getEmployees = async (id) => {
+  let employees
+  try {
+    const response = await axios.get(`http://localhost:3001/api/employee/department/${id}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    if (response.data.success) {
+      employees = response.data.employees
+    }
+  } catch (error) {
+    console.error("Error fetching departments in EmployeeHelper file:", error)
+    if (error.response && !error.response.data.success) {
+      alert(error.response.data.error)
+    }
+  }
+  return employees
+
+};
+
 export const EmployeeButtons = ({ _id }) => {
   const navigate = useNavigate()
 
@@ -72,7 +96,7 @@ export const EmployeeButtons = ({ _id }) => {
       >Edit
       </button>
       <button className="px-3 py-1 bg-yellow-600 text-white rounded-sm cursor-pointer hover:bg-red-700"
-
+        onClick={() => navigate(`/admin-dashboard/employees/salary/${_id}`)}
       >Salary
       </button>
       <button className="px-3 py-1 bg-red-600 text-white rounded-sm cursor-pointer hover:bg-red-700"
