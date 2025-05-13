@@ -14,7 +14,7 @@ const RoleBaseRoutes = ({ children, requiredRole }) => {
     if (!requiredRole) {
         <Navigate to="/unauthorized" />
     }
-
+    
     return user ? children : <Navigate to="/login" />
 }
 

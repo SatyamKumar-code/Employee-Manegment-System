@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import AdminDashbaord from './pages/AdminDashboard'
-import EmployeeDashboard from './pages/employeeDashboard'
+import EmployeeDashboard from './pages/EmployeeDashboard.jsx'
 import PrivateRoutes from './utils/PrivateRoutes'
 import RoleBaseRoutes from './utils/RoleBaseRoutes'
 import AdminSummary from './components/dasboard/AdminSummary'
@@ -14,6 +14,9 @@ import View from './components/employee/View'
 import Edit from './components/employee/Edit'
 import AddSalary from './components/salary/Add'
 import ViewSalary from './components/salary/View'
+import SummaryCard from './components/EmployeeDashboard/Summary.jsx'
+import LeaveList from './components/leave/List'
+import AddLeave from './components/leave/Add'
 
 function App() {
 
@@ -44,7 +47,21 @@ function App() {
           <Route path="/admin-dashboard/salary/add" element={<AddSalary />} />
 
         </Route>
-        <Route path='/employee-dashboard' element={<EmployeeDashboard />}></Route>
+        <Route path='/employee-dashboard' element={
+          <PrivateRoutes>
+            <RoleBaseRoutes requiredRole={["employee"]}>
+              <EmployeeDashboard />
+            </RoleBaseRoutes>
+          </PrivateRoutes>
+        }
+        >
+          <Route index element={<SummaryCard />}></Route>
+
+          <Route path='/employee-dashboard/profile/:id' element={<View />}></Route>
+          <Route path='/employee-dashboard/leaves' element={<LeaveList />}></Route>
+          <Route path='/employee-dashboard/Add-leave' element={<AddLeave />}></Route>
+
+        </Route>
       </Routes>
     </BrowserRouter>
   )
